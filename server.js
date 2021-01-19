@@ -1,6 +1,7 @@
 // Dependencies
 
 var express= require("express");
+var path= require("path");
 
 // sets up express server
 var app=express();
@@ -21,7 +22,15 @@ app.use(express.json());
 // =========================================================
 // GET route for /notes - should return `notes.html` file.
 
+app.get("/notes", function(req, res) {
+    res.sendFile(path.join(__dirname, "Develop/public/notes.html"))
+})
+
 // GET route - `*` - should return the `index.html` file.
+
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "Develop/public/index.html"));
+});
 
 // API ROUTES
 // =========================================================
