@@ -3,7 +3,7 @@
 var express= require("express");
 var path= require("path");
 var fs=require("fs");
-var noteData= require("./Develop/db/db.json");
+// var noteData= require("./Develop/db/db.json");
 
 
 
@@ -17,6 +17,7 @@ var PORT= 8800;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("./Develop/public"));
 
 
 // ROUTES
@@ -30,11 +31,7 @@ app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "Develop/public/notes.html"))
 })
 
-// GET route - `*` - should return the `index.html` file.
 
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "Develop/public/index.html"));
-});
 
 // API ROUTES
 // =========================================================
@@ -42,14 +39,23 @@ app.get("*", function(req, res) {
 
 // GET `/api/notes` - should read `db.json` file and return all saved notes as JSON.
 app.get("/api/notes", function(req, res) {
-    fs.readFile(noteData, "utf8", (err, jsonString)=>{
+    fs.readFile(`./Develop/db/db.json`, "utf8", (err, jsonString)=>{
+        const data= JSON.parse(jsonString);
+        console.log("File data: ", data);
+        res.json(data);
         if (err) {
             console.log("File read failed: ", err)
-            return
+            return;
         }
         console.log("File data: ", jsonString);
     });
     
+});
+
+// GET route - `*` - should return the `index.html` file.
+
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "Develop/public/index.html"));
 });
 
 // POST `/api/notes`- should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
