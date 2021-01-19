@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("./Develop/public"));
 
-
 // ROUTES
 // =========================================================
 
@@ -30,9 +29,6 @@ app.use(express.static("./Develop/public"));
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "Develop/public/notes.html"))
 })
-
-
-
 // API ROUTES
 // =========================================================
 
@@ -59,7 +55,20 @@ app.get("*", function(req, res) {
 });
 
 // POST `/api/notes`- should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+app.post("/api/notes", function(req, res) {
+    var newNote=req.body;
+    var data= JSON.stringify(newNote, null, 2);
 
+    fs.appendFile(`./Develop/db/db.json`, data, done);
+
+    function done(err) {
+        console.log("Note Added.")
+    }
+
+    
+    res.json(newNote);
+
+ })
 
 /* DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. This means you'll need to find a way to give each 
 note a unique `id` when it's saved. In order to delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given 
