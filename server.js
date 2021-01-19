@@ -2,6 +2,10 @@
 
 var express= require("express");
 var path= require("path");
+var fs=require("fs");
+var noteData= require("./Develop/db/db.json");
+
+
 
 // sets up express server
 var app=express();
@@ -37,7 +41,16 @@ app.get("*", function(req, res) {
 
 
 // GET `/api/notes` - should read `db.json` file and return all saved notes as JSON.
-
+app.get("/api/notes", function(req, res) {
+    fs.readFile(noteData, "utf8", (err, jsonString)=>{
+        if (err) {
+            console.log("File read failed: ", err)
+            return
+        }
+        console.log("File data: ", jsonString);
+    });
+    
+});
 
 // POST `/api/notes`- should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
 
