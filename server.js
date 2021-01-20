@@ -79,19 +79,37 @@ note a unique `id` when it's saved. In order to delete a note, you'll need to re
 
 app.delete("/api/notes/:id", function(req, res) {
 var oldNote=req.params.id;
+var newNote=req.body;
+
+
+fs.readFile(`./Develop/db/db.json`, "utf8", (err, jsonString)=>{
+    var data= JSON.parse(jsonString);
+   data.push(oldNote);
+
+    fs.writeFile(`./Develop/db/db.json`, JSON.stringify(data), deleted);
+
+    function deleted(err) {
+    console.log(err);
+    console.log("Note Deleted.");
+}
+
 
 for (var i=0; i< noteData.length; i++) {
     if (oldNote === noteData[i].id) {
-        noteData.splice(i, 1);
-    }
-}
-fs.writeFile(`./Develop/db/db.json`, JSON.stringify(data), deleted);
+       var refresh= noteData.splice(i, 1);
+       refresh;
 
-function deleted(err) {
-    console.log("Note deleted.");
-}
+    }
+};
+
+
+console.log(err);
 res.send(noteData);
+res.json(noteData);
 })
+
+});
+
 
 // LISTENER
 app.listen(PORT, function() {
