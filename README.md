@@ -4,9 +4,6 @@
 For this assignment, I had to build my first full-stack application, which operates like a note-taker. It has a save note and delete note feature which allows you to add or delete notes from the database on the back end using express. 
 
 ## Table of Contents
-- [noteTaker](#notetaker)
-  - [Note Taker assignment](#note-taker-assignment)
-  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
   - [License](#license)
