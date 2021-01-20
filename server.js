@@ -49,7 +49,7 @@ app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "Develop/public/index.html"));
 });
 
-// POST `/api/notes`- should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+// post a note
 app.post("/api/notes", function(req, res) {
     var newNote=req.body;
     newNote.id=uuidv4();
@@ -72,44 +72,21 @@ app.post("/api/notes", function(req, res) {
     })
  })
 
-/* DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. This means you'll need to find a way to give each 
-note a unique `id` when it's saved. In order to delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given 
-`id` property, and then rewrite the notes to the `db.json` file. */
-// date.now - time in milliseconds
+// Delete feature
+app.delete(`/api/notes/:id`, function(req, res) {
+    var oldNote=req.params.id;
 
-app.delete("/api/notes/:id", function(req, res) {
-var oldNote=req.params.id;
-var newNote=req.body;
-
-
-fs.readFile(`./Develop/db/db.json`, "utf8", (err, jsonString)=>{
-    var data= JSON.parse(jsonString);
-   data.push(oldNote);
-
-    fs.writeFile(`./Develop/db/db.json`, JSON.stringify(data), deleted);
-
-    function deleted(err) {
-    console.log(err);
-    console.log("Note Deleted.");
-}
-
-
-for (var i=0; i< noteData.length; i++) {
-    if (oldNote === noteData[i].id) {
-       var refresh= noteData.splice(i, 1);
-       refresh;
-
+    for (var i=0; i <noteData.length; i++) {
+        if (oldNote === noteData[i].id) {
+            noteData.splice(i, 1);
+        }
     }
-};
-
-
-console.log(err);
-res.send(noteData);
-res.json(noteData);
+    res.send(noteData);
+    fs.writeFile('Develop/db/db.json', JSON.stringify(noteData), err=>{
+        if (err) throw err;
+        return true;
+    })
 })
-
-});
-
 
 // LISTENER
 app.listen(PORT, function() {
