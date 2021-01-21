@@ -13,7 +13,7 @@ var noteData= require("./Develop/db/db.json");
 var app=express();
 
 // sets up port
-var PORT= 8800;
+var PORT= process.env.PORT || 8800;
 
 // Sets up express app to handle data parsing
 
