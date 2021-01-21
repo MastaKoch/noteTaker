@@ -1,1 +1,1 @@
-web:node serc/server.js
+web: node serc/server.js
