@@ -8,6 +8,7 @@ For this assignment, I had to build my first full-stack application, which opera
   - [Usage](#usage)
   - [License](#license)
   - [Questions](#questions)
+  - [Link](#link)
 
 
 ## Installation
@@ -41,3 +42,8 @@ MIT
 For any questions, please feel free to email me @ alexkoch1996@gmail.com.
 
 Thanks and happy coding! :)
+
+## Link
+Check it out!
+
+https://damn-that-note-taker-tho.herokuapp.com/
